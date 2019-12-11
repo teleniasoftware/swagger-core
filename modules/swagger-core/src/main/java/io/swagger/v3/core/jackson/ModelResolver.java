@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -1717,6 +1718,39 @@ public class ModelResolver extends AbstractModelConverter implements ModelConver
                     for (DiscriminatorMapping mapping : mappings) {
                         if (!mapping.value().isEmpty() && !mapping.schema().equals(Void.class)) {
                             discriminator.mapping(mapping.value(), constructRef(context.resolve(new AnnotatedType().type(mapping.schema())).getName()));
+                        }
+                    }
+                }
+            } else {
+                JsonTypeInfo typeInfo = type.getRawClass().getDeclaredAnnotation( JsonTypeInfo.class );
+                if(typeInfo != null) {
+                    JsonSubTypes jsonSubTypes = type.getRawClass().getDeclaredAnnotation(JsonSubTypes.class);
+                    if (jsonSubTypes != null) {
+                        JsonSubTypes.Type mappings[] = jsonSubTypes.value();
+                        if (mappings != null && mappings.length > 0) {
+                            for (JsonSubTypes.Type mapping : mappings) {
+
+                                if (mapping.value().equals(Void.class)) {
+                                    continue;
+                                }
+
+                                String name = mapping.name();
+
+                                if (name.isEmpty()) {
+                                    if (typeInfo.use() == JsonTypeInfo.Id.CLASS) {
+                                        name = mapping.value().getCanonicalName();
+                                    } else if (typeInfo.use() == JsonTypeInfo.Id.MINIMAL_CLASS) {
+                                        name = mapping.value().getName();
+                                        if (!name.equals(mapping.value().getCanonicalName())) {
+                                            name = "." + name;
+                                        }
+                                    }
+                                }
+
+                                if (!name.isEmpty() && !mapping.value().equals(Void.class)) {
+                                    discriminator.mapping(name, constructRef(context.resolve(new AnnotatedType().type(mapping.value())).getName()));
+                                }
+                            }
                         }
                     }
                 }
