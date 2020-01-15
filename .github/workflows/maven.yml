@@ -22,4 +22,10 @@ jobs:
       run: |
         mkdir -p ~/.m2
         echo "<settings><servers><server><id>github</id><username>OWNER</username><password>${GITHUB_TOKEN}</password></server></servers></settings>" > ~/.m2/settings.xml
-        mvn -DskipTests deploy
+        mvn -DskipTests deploy --file=modules/swagger-annotations/pom.xml
+        mvn -DskipTests deploy --file=modules/swagger-core/pom.xml
+        mvn -DskipTests deploy --file=modules/swagger-integration/pom.xml
+        mvn -DskipTests deploy --file=modules/swagger-jaxrs2/pom.xml
+        mvn -DskipTests deploy --file=modules/swagger-jaxrs2-servlet-initializer/pom.xml
+        mvn -DskipTests deploy --file=modules/swagger-maven-plugin/pom.xml
+        mvn -DskipTests deploy --file=modules/swagger-models/pom.xml
