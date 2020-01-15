@@ -10,7 +10,7 @@
     <artifactId>swagger-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-project</name>
-    <version>2.1.1-SNAPSHOT</version>
+    <version>2.1.0-TELENIA</version>
     <url>https://github.com/swagger-api/swagger-core</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-core.git</connection>
@@ -193,6 +193,13 @@
                 <version>2.5.3</version>
             </plugin>
             <!-- TODO tests coverage -->
+            <!--
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>3.0.0-M1</version>
+              </plugin>
+            -->
         </plugins>
         <pluginManagement>
             <plugins>
@@ -529,4 +536,11 @@
         <coverage.missed.classes>0</coverage.missed.classes>
 
     </properties>
+    <distributionManagement>
+        <repository>
+            <id>telenia</id>
+            <name>Telenia Registry</name>
+            <url>https://registry.teleniasoftware.com/repository/telenia_maven/</url>
+        </repository>
+    </distributionManagement>
 </project>
