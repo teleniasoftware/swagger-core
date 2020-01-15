@@ -536,4 +536,11 @@
         <coverage.missed.classes>0</coverage.missed.classes>
 
     </properties>
+    <distributionManagement>
+        <repository>
+          <id>github</id>
+          <name>GitHub OWNER Apache Maven Packages</name>
+          <url>https://maven.pkg.github.com/teleniasoftware</url>
+        </repository>
+     </distributionManagement>
 </project>
