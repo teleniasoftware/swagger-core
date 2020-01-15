@@ -62,7 +62,7 @@ You need the following installed and available in your $PATH:
 * Jackson 2.4.5 or greater
 
 
-### To build from source (currently 2.1.0-TELENIA)
+### To build from source (currently 2.1.1-TELENIA)
 ```
 # first time building locally
 mvn -N
