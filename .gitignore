@@ -14,4 +14,3 @@ atlassian-ide-plugin.xml
 sonar-project.properties
 test-output/
 deploy.sh
-deploy_.sh
