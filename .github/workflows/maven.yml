@@ -16,4 +16,10 @@ jobs:
     - name: Build with Maven
       run: mvn -DskipTests -B package --file pom.xml
     - name: deploy
-      run: mvn deploy -Dregistry=https://maven.pkg.github.com/teleniasoftware -Dtoken=${{ secrets.GITHUB_TOKEN }}
+      
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run:
+        mkdir ~/.m2
+        echo "<settings><servers><server><id>github</id><username>OWNER</username><password>${GITHUB_TOKEN}</password></server></servers></settings>" > ~/.m2/settings.xml
+        mvn -DskipTests deploy
